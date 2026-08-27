@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LOST ARK RAID CHECKER</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">LOST ARK</p>
+        <h1>RAID CHECKER</h1>
+        <p class="subtitle">공격대 코드를 공유하고 주간 레이드 현황을 함께 체크하세요.</p>
+      </div>
+      <div class="week-badge" id="weekBadge"></div>
+    </header>
+
+    <section class="room-card card">
+      <div id="roomLobby" class="room-lobby">
+        <div>
+          <span class="mini-label">SHARED RAID ROOM</span>
+          <h2>공격대 체크표</h2>
+          <p>새 공격대를 만들거나 받은 코드를 입력해 같은 체크표에 접속하세요.</p>
+        </div>
+        <div class="room-actions">
+          <button id="createRoomBtn" class="btn primary">새 공격대 만들기</button>
+          <div class="join-row">
+            <input id="roomCodeInput" type="text" maxlength="6" placeholder="공격대 코드 6자리" autocomplete="off" />
+            <button id="joinRoomBtn" class="btn">코드로 입장</button>
+          </div>
+        </div>
+        <p id="firebaseNotice" class="firebase-notice" hidden></p>
+      </div>
+
+      <div id="roomActive" class="room-active" hidden>
+        <div>
+          <span class="mini-label">CURRENT RAID ROOM</span>
+          <div class="room-code-line">
+            <strong id="currentRoomCode">------</strong>
+            <span id="syncBadge" class="sync-badge">연결 중</span>
+          </div>
+          <p>같은 공격대 코드를 사용하는 사람은 이 체크표를 실시간으로 함께 수정할 수 있어요.</p>
+        </div>
+        <div class="toolbar-actions">
+          <button id="copyInviteBtn" class="btn primary">초대 링크 복사</button>
+          <button id="leaveRoomBtn" class="btn">다른 공격대 입장</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="appContent" hidden>
+      <section class="toolbar card">
+        <div class="input-wrap">
+          <label for="characterName">캐릭터 추가</label>
+          <div class="input-row">
+            <input id="characterName" type="text" maxlength="20" placeholder="캐릭터 이름 입력" />
+            <button id="addCharacterBtn" class="btn primary">추가</button>
+          </div>
+        </div>
+        <div class="toolbar-actions">
+          <button id="copyBtn" class="btn">현재 현황 복사</button>
+          <button id="resetBtn" class="btn danger">이번 주 전체 초기화</button>
+        </div>
+      </section>
+
+      <section class="summary card">
+        <div>
+          <span class="summary-label">전체 진행도</span>
+          <strong id="progressText">0 / 0</strong>
+        </div>
+        <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+      </section>
+
+      <section id="emptyState" class="empty card">
+        <div class="empty-icon">✦</div>
+        <h2>아직 등록된 캐릭터가 없어요.</h2>
+        <p>캐릭터를 추가하면 같은 공격대에 접속한 사람 모두에게 표시됩니다.</p>
+      </section>
+
+      <section id="characters" class="characters"></section>
+    </div>
+  </main>
+
+  <template id="characterTemplate">
+    <article class="character-card card">
+      <div class="character-header">
+        <div>
+          <span class="mini-label">CHARACTER</span>
+          <h2 class="character-name"></h2>
+        </div>
+        <button class="icon-btn delete-character" title="캐릭터 삭제" aria-label="캐릭터 삭제">×</button>
+      </div>
+      <div class="raid-list"></div>
+      <div class="character-progress">
+        <span class="character-progress-text"></span>
+        <div class="mini-progress-track"><div class="mini-progress-fill"></div></div>
+      </div>
+    </article>
+  </template>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
